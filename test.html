@@ -1,0 +1,41 @@
+<head>
+    <!-- Import style -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/element-plus@2/dist/index.min.css">
+    <!-- Import Vue 3 -->
+    <script src="//cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.min.js"></script>
+    <!-- Import component library -->
+    <script src="//cdn.jsdelivr.net/npm/element-plus@2/dist/index.full.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/@element-plus/icons-vue/dist/index.iife.min.js"></script>
+</head>
+
+<div id="app">
+    hello
+</div>
+
+<script type="module">
+    const { createApp, ref, onBeforeMount, onMounted } = Vue;
+    const app = createApp({
+        setup() {
+            //console.log('1-开始创建组件-setup')
+            onBeforeMount(() => {
+                //console.log('2.组件挂载页面之前执行----onBeforeMount')
+                // 注册所有 Element Plus Icons 为全局组件
+                for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+                    app.component(key, component);
+                }
+            })
+            onMounted(() => {
+                //console.log('3.-组件挂载到页面之后执行-------onMounted')
+            })
+            return {
+
+            }
+        }
+    });
+    app.use(ElementPlus);
+    app.mount('#app');
+</script>
+
+<style>
+</style>
