@@ -34,11 +34,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: 调用模糊搜索设备工作流程
-        uses: ./.github/workflows/fuzzy_search_devices
-        with:
-          query: ${{ github.event.inputs.query }}
-
       - name: 初始化环境
         run: |
           sudo apt-get -qq update
@@ -55,6 +50,11 @@ jobs:
         with: 
           path: origin
 
+      - name: 调用模糊搜索设备工作流程
+        uses: ./.github/workflows/fuzzy_search_devices
+        with:
+          query: ${{ github.event.inputs.query }}
+  
       - name: 下载imagebuilder
         run: |
           wget $DOWNLOAD_BASE/releases/$VERSION/targets/mediatek/filogic/$VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64.tar.xz
