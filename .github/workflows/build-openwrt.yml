@@ -3,18 +3,22 @@
 name: 生成 OpenWrt 固件
 
 # Controls when the workflow will run
+
 on:
-  # 允许您从“操作”选项卡手动运行此工作流程
   workflow_dispatch:
     inputs:
-      release: 
-        description: 上传到 Release
+      release:
+        description: "上传到 Release"
         required: false
         default: 'false'
       upload-all:
-        description: 上传到 Artifacts
+        description: "上传到 Artifacts"
         required: false
         default: 'true'
+      query:
+        description: "搜索关键词"
+        required: true
+        default: '360t7'
 
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
@@ -30,6 +34,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: 调用模糊搜索设备工作流程
+        uses: ./.github/workflows/fuzzy_search_devices
+        with:
+          query: ${{ github.event.inputs.query }}
+
       - name: 初始化环境
         run: |
           sudo apt-get -qq update
