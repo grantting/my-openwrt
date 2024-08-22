@@ -1,18 +1,18 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Generate x86_64 OpenWrt Firmware
+name: 生成 OpenWrt 固件
 
 # Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
+  # 允许您从“操作”选项卡手动运行此工作流程
   workflow_dispatch:
     inputs:
       release: 
-        description: 将编译出的镜像上传到 Release
+        description: 上传到 Release
         required: false
         default: 'false'
       upload-all:
-        description: 将编译出的所有镜像都上传到 Artifacts
+        description: 上传到 Artifacts
         required: false
         default: 'true'
 
@@ -30,55 +30,55 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Initialization Environment
+      - name: 初始化环境
         run: |
           sudo apt-get -qq update
           sudo apt-get -qq install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip qemu-utils mkisofs
 
-      - name: Setup Environment Variables
+      - name: 设置环境变量
         run: |
           echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
           echo "DATETIME=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
       
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout
+      - name: 查看
         uses: actions/checkout@v3
         with: 
           path: origin
 
-      - name: Download Image Builder
+      - name: 下载imagebuilder
         run: |
           wget $DOWNLOAD_BASE/releases/$VERSION/targets/mediatek/filogic/$VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64.tar.xz
           tar -xvf $VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64.tar.xz
           rm -rf $VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64.tar.xz
           cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64/
            
-      - name: Run Patch and DIY Scripts
+      - name: 运行补丁和 DIY 脚本
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64
         run: |
           bash scripts/builder-patch.sh
           bash scripts/clash.sh
 
-      - name: Generate Firmware
+      - name: 生成固件
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64
         run: |
           bash build.sh
 
-      - name: Upload VDI Image For Development Purpose
+      - name: 上传 VDI 映像用于开发目的
         if: github.ref == 'refs/heads/dev'
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-vdi-image-${{ env.DATETIME }}
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64/bin/targets/mediatek/filogic/*.vdi
 
-      - name: Upload All Firmware to Artifacts
+      - name: 将所有固件上传到 Artifacts
         if: github.event.inputs.upload-all == 'true'
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ env.DATETIME }}
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64/bin/targets/mediatek/filogic/*
 
-      - name: Upload Firmware to Release
+      - name: 上传固件发布
         if: github.event.inputs.release == 'true'
         uses: svenstaro/upload-release-action@v2
         with:

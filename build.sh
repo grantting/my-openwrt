@@ -4,7 +4,7 @@
 make info
 
 # 主配置名称
-PROFILE="qihoo_360t7"
+PROFILE="360t7"
 PACKAGES=""
 
 # Argon 主题
