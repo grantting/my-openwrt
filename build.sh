@@ -4,8 +4,7 @@
 make info
 
 # 主配置名称
-PROFILE="filogic"
-
+PROFILE="qihoo_360t7"
 PACKAGES=""
 
 # Argon 主题
