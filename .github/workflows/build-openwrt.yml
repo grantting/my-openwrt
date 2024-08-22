@@ -23,8 +23,8 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  Generate:
+# 该工作流程包含一个名为“build”的作业 
+ Generate:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
