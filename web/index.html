@@ -1,41 +1,370 @@
 <head>
-    <!-- Import style -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/element-plus@2/dist/index.min.css">
-    <!-- Import Vue 3 -->
-    <script src="//cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.min.js"></script>
-    <!-- Import component library -->
-    <script src="//cdn.jsdelivr.net/npm/element-plus@2/dist/index.full.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/@element-plus/icons-vue/dist/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tdesign-vue-next/dist/tdesign.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tdesign-vue-next/dist/tdesign.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/tdesign-icons-vue-next@0.2.4/dist/index.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+
 </head>
 
 <div id="app">
-    hello
+    <div class="verticalCenter">
+        <t-card :bordered="false" class="multiline responsive-width" class="multiline">
+            <template #title>
+                路由器选择
+            </template>
+            <t-space direction="vertical">
+                <t-auto-complete v-model="value" :options="options" highlight-keyword filterable placeholder="输入型号"
+                    clearable="true" :select="parameterListGeneration(value)"></t-auto-complete>
+
+                <t-descriptions layout="vertical" tableLayout="auto">
+                    <t-descriptions-item label="机器型号">{{parameterList.name}}</t-descriptions-item>
+                    <t-descriptions-item label="目标平台">{{parameterList.targetPlatform}}</t-descriptions-item>
+                </t-descriptions>
+            </t-space>
+
+        </t-card>
+    </div>
+
 </div>
 
 <script type="module">
-    const { createApp, ref, onBeforeMount, onMounted } = Vue;
+    const { createApp, ref, onBeforeMount, onMounted, message, inject } = Vue;
+
     const app = createApp({
         setup() {
-            //console.log('1-开始创建组件-setup')
-            onBeforeMount(() => {
-                //console.log('2.组件挂载页面之前执行----onBeforeMount')
-                // 注册所有 Element Plus Icons 为全局组件
-                for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-                    app.component(key, component);
-                }
-            })
-            onMounted(() => {
-                //console.log('3.-组件挂载到页面之后执行-------onMounted')
-            })
-            return {
+            const value = ref('')
 
+            const deviceList = [
+                {
+                    "name": "livinet_zr-3020-ubootmod",
+                    "description": "Livinet ZR-3020 (custom U-Boot layout)",
+                    "packages": [
+                        "kmod-mt7981-firmware",
+                        "mt7981-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "livinet,zr-3020-ubootmod"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "netgear_wax220",
+                    "description": "NETGEAR WAX220",
+                    "packages": [
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "netgear,wax220"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "mediatek_mt7981-rfb",
+                    "description": "MediaTek MT7981 rfb",
+                    "packages": [
+                        "kmod-mt7981-firmware",
+                        "kmod-usb3",
+                        "e2fsprogs",
+                        "f2fsck",
+                        "mkf2fs",
+                        "mt7981-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "mediatek,mt7981-rfb"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "mediatek_mt7986a-rfb-nand",
+                    "description": "MediaTek MT7986 rfba AP (NAND)",
+                    "packages": [
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "mediatek,mt7986a-rfb-snand"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "mediatek_mt7986b-rfb",
+                    "description": "MediaTek MTK7986 rfbb AP",
+                    "packages": [
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "mediatek,mt7986b-rfb"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "mediatek_mt7988a-rfb",
+                    "description": "MediaTek MT7988A rfb",
+                    "packages": [
+                        "kmod-sfp"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "mediatek,mt7988a-rfb"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "mercusys_mr90x-v1",
+                    "description": "MERCUSYS MR90X v1",
+                    "packages": [
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "mercusys,mr90x-v1"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "qihoo_360t7",
+                    "description": "Qihoo 360T7 (OpenWrt U-Boot layout)",
+                    "packages": [
+                        "kmod-mt7981-firmware",
+                        "mt7981-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "qihoo,360t7"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "qihoo_360t7-ubootmod",
+                    "description": "Qihoo 360T7 (custom U-Boot layout)",
+                    "packages": [
+                        "kmod-mt7981-firmware",
+                        "mt7981-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "qihoo,360t7-ubootmod",
+                        "qihoo,360-t7-ubootmod"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "tplink_tl-xdr4288",
+                    "description": "TP-Link TL-XDR4288",
+                    "packages": [
+                        "kmod-usb3",
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "tplink,tl-xdr4288"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "tplink_tl-xdr6086",
+                    "description": "TP-Link TL-XDR6086",
+                    "packages": [
+                        "kmod-usb3",
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "tplink,tl-xdr6086"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "tplink_tl-xdr6088",
+                    "description": "TP-Link TL-XDR6088",
+                    "packages": [
+                        "kmod-usb3",
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "tplink,tl-xdr6088"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "xiaomi_mi-router-wr30u-112m-nmbm",
+                    "description": "Xiaomi Mi Router WR30U (custom U-Boot layout)",
+                    "packages": [
+                        "kmod-mt7981-firmware",
+                        "mt7981-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "xiaomi,mi-router-wr30u-112m-nmbm"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "xiaomi_mi-router-wr30u-stock",
+                    "description": "Xiaomi Mi Router WR30U (stock layout)",
+                    "packages": [
+                        "kmod-mt7981-firmware",
+                        "mt7981-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "xiaomi,mi-router-wr30u-stock"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "xiaomi_mi-router-wr30u-ubootmod",
+                    "description": "Xiaomi Mi Router WR30U (OpenWrt U-Boot layout)",
+                    "packages": [
+                        "kmod-mt7981-firmware",
+                        "mt7981-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "xiaomi,mi-router-wr30u-ubootmod"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "xiaomi_redmi-router-ax6000",
+                    "description": "Xiaomi Redmi Router AX6000 (custom U-Boot layout)",
+                    "packages": [
+                        "kmod-leds-ws2812b",
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "xiaomi,redmi-router-ax6000"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "xiaomi_redmi-router-ax6000-stock",
+                    "description": "Xiaomi Redmi Router AX6000 (stock layout)",
+                    "packages": [
+                        "kmod-leds-ws2812b",
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "xiaomi,redmi-router-ax6000-stock"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "xiaomi_redmi-router-ax6000-ubootmod",
+                    "description": "Xiaomi Redmi Router AX6000 (OpenWrt U-Boot layout)",
+                    "packages": [
+                        "kmod-leds-ws2812b",
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "xiaomi,redmi-router-ax6000-ubootmod"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "zyxel_ex5601-t0-stock",
+                    "description": "Zyxel EX5601-T0 (stock layout)",
+                    "packages": [
+                        "kmod-mt7986-firmware",
+                        "mt7986-wo-firmware"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "mediatek,mt7986a-rfb-snand"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                },
+                {
+                    "name": "zyxel_nwa50ax-pro",
+                    "description": "ZyXEL NWA50AX Pro",
+                    "packages": [
+                        "kmod-mt7981-firmware",
+                        "mt7981-wo-firmware",
+                        "zyxel-bootconfig"
+                    ],
+                    "hasImageMetadata": 1,
+                    "supportedDevices": [
+                        "zyxel,nwa50ax-pro"
+                    ],
+                    "targetPlatform": "mediatek/filogic"
+                }
+            ]
+
+            // 生成 options 数组
+            const generateOptions = (list) => {
+                return list.map(item => item.name);
+            };
+
+            const getTargetPlatformByName = (deviceName) => {
+                return deviceList.find(device => device.name === deviceName)?.targetPlatform;
+            }
+
+            const parameterList = ref([])
+
+            const parameterListGeneration = async (value) => {
+                // 更新 parameterList 的属性
+                parameterList.value.name = value;
+                parameterList.value.targetPlatform = getTargetPlatformByName(value);
+
+                // 准备要复制的文本
+                const textToCopy = `${parameterList.value.name},${parameterList.value.targetPlatform}`;
+
+                try {
+                    // 复制到剪切板
+
+                    await navigator.clipboard.writeText(textToCopy);
+
+                    if (textToCopy != ',undefined') {
+
+                        setTimeout(() => {
+                            alert('已成功复制到剪贴板');
+                        }, 200);
+                    }
+
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+            };
+
+            // 使用函数生成 options
+            const options = generateOptions(deviceList);
+
+            onMounted(() => {
+
+            })
+
+            return {
+                options, value, getTargetPlatformByName, parameterList,
+                parameterListGeneration,
             }
         }
     });
-    app.use(ElementPlus);
+
+    app.use(TDesign);
+    app.config.globalProperties.$message = message;
     app.mount('#app');
 </script>
 
 <style>
+
 </style>

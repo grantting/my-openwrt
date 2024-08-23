@@ -16,7 +16,7 @@ on:
         required: false
         default: 'true'
       model:
-        description: '设备型号（例如 360t7）'
+        description: '机型参数'
         required: false
         default: '360t7'
 
