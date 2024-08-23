@@ -1,0 +1,26 @@
+.t-card__title {
+    font-size: 22px;
+    font-weight: 320;
+}
+
+body {
+    background-color: #F2F2F2;
+}
+
+.multiline.responsive-width {
+    width: 100%;
+    /* 默认情况下卡片宽度为100% */
+}
+
+@media (min-aspect-ratio: 1/1) {
+    .multiline.responsive-width {
+        width: 60%;
+        /* 如果屏幕的宽度大于高度，则卡片宽度为60% */
+    }
+}
+
+.verticalCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
