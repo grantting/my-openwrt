@@ -18,7 +18,7 @@ on:
       model:
         description: '设备型号（例如 360t7）'
         required: false
-        default: '360t7'
+        default: 'qihoo_360t7'
 
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
