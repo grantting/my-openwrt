@@ -15,17 +15,33 @@ fi
 # 提取 profile 名称
 PROFILE_NAME="${1#*=}"
 
+# 提取 profile 名称
+PROFILE_NAME="${1#*=}"
+
 # 定义一个函数来匹配传入的型号并返回对应的 PROFILE
 match_profile() {
   local model=$1
+  local profile=""
+  
+  # 逐行读取配置文件
   while IFS= read -r line; do
     if [[ $line =~ ^SupportedDevices:.+$ ]]; then
-      if [[ ${BASH_REMATCH[0]} =~ $model ]]; then
-        echo "${line%%:*}"
-        return 0
+      # 提取 SupportedDevices 的值
+      local supported_devices="${BASH_REMATCH[0]}"
+      # 去掉 SupportedDevices: 前缀
+      supported_devices="${supported_devices#*: }"
+      # 替换逗号为空格，以便使用空格分割
+      supported_devices="${supported_devices//,/ }"
+      # 检查是否包含传入的模型
+      if [[ $supported_devices =~ (^|[[:space:]])$model($|[[:space:]]) ]]; then
+        # 获取当前配置的名称
+        profile=$(head -n 1 $PROFILES_FILE | sed -n "/^$model/p")
+        break
       fi
     fi
-  done < profiles.txt
+  done < "$PROFILES_FILE"
+  
+  echo "$profile"
 }
 
 # 查找并设置 PROFILE
@@ -37,9 +53,7 @@ else
   echo "Found profile: $PROFILE"
   # 这里放置你的构建命令，例如:
   # make $PROFILE
-  PROFILE="$PROFILE"
 fi
-
 
 PACKAGES=""
 
