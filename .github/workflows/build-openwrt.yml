@@ -15,9 +15,9 @@ on:
         description: "上传到 Artifacts"
         required: false
         default: 'true'
-      query:
-        description: "搜索关键词"
-        required: true
+      model:
+        description: '设备型号（例如 360t7）'
+        required: false
         default: '360t7'
 
 env:
@@ -43,18 +43,14 @@ jobs:
         run: |
           echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
           echo "DATETIME=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-      
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+          echo "MODEL=${{ github.event.inputs.model }}" >> $GITHUB_ENV
+          
+      # 在 $GITHUB_WORKSPACE 下签出您的存储库，以便您的作业可以访问它
       - name: 查看
         uses: actions/checkout@v3
         with: 
           path: origin
 
-      - name: 调用模糊搜索设备工作流程
-        uses: ./.github/workflows/fuzzy_search.yml
-        with:
-          query: ${{ github.event.inputs.query }}
-  
       - name: 下载imagebuilder
         run: |
           wget $DOWNLOAD_BASE/releases/$VERSION/targets/mediatek/filogic/$VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64.tar.xz
@@ -71,7 +67,7 @@ jobs:
       - name: 生成固件
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64
         run: |
-          bash build.sh
+          bash build.sh --profile "${{ env.MODEL }}"
 
       - name: 上传 VDI 映像用于开发目的
         if: github.ref == 'refs/heads/dev'
