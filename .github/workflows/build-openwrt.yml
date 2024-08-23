@@ -51,7 +51,7 @@ jobs:
           path: origin
 
       - name: 调用模糊搜索设备工作流程
-        uses: ./.github/workflows/fuzzy_search_devices
+        uses: ./.github/workflows/fuzzy_search.yml
         with:
           query: ${{ github.event.inputs.query }}
   
