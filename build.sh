@@ -12,8 +12,38 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
+# 检查是否指定了 PROFILE 参数
+if [ -z "$PROFILE" ]; then
+    echo "No profile specified."
+    exit 1
+fi
+
+# JSON 文件路径
+JSON_FILE="router_configs.json"
+
+# 确保 jq 工具存在
+if ! command -v jq &> /dev/null; then
+    echo "jq tool is required but not installed. Please install jq."
+    exit 1
+fi
+
+# 搜索 JSON 文件中的设备
+MATCH=$(jq -r --arg profile "$PROFILE" '
+    .[] | select(
+        .supportedDevices[] | contains($profile)
+    ) | .name
+' "$JSON_FILE")
+
+# 检查是否找到匹配的设备
+if [ -n "$MATCH" ]; then
+    echo "Device name(s) matching '$PROFILE':"
+    echo "$MATCH"
+else
+    echo "No matching device found for profile '$PROFILE'."
+fi
+
 # 使用 $PROFILE 变量
-PROFILE="$PROFILE"
+PROFILE="$MATCH"
 
 # 主配置名称
 # PROFILE="qihoo_360t7"

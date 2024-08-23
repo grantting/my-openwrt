@@ -18,7 +18,7 @@ on:
       model:
         description: '设备型号（例如 360t7）'
         required: false
-        default: 'qihoo_360t7'
+        default: '360t7'
 
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
@@ -37,7 +37,7 @@ jobs:
       - name: 初始化环境
         run: |
           sudo apt-get -qq update
-          sudo apt-get -qq install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip qemu-utils mkisofs
+          sudo apt-get -qq install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip qemu-utils mkisofs jq
 
       - name: 设置环境变量
         run: |
