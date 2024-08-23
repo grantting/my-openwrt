@@ -27,7 +27,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4.3.0
       with:
         branch: gh-pages # 这是默认的GitHub Pages分支
-        folder: . # 指定要发布的文件夹，此处为根目录下的所有文件
+        folder: web # 指定要发布的文件夹，此处为根目录下的所有文件
 
     - name: Upload URL as Artifact
       uses: actions/upload-artifact@v3
