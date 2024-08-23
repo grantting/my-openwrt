@@ -1,0 +1,25 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # 或者您正在使用的分支名
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup and Build
+      run: |
+        # 这里可以添加任何构建步骤，例如编译、打包等
+        # 对于简单的HTML页面，可能不需要额外的构建步骤
+        echo "Building the site..."
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4.3.0
+      with:
+        branch: gh-pages # 这是默认的GitHub Pages分支
+        folder: . # 指定要发布的文件夹，此处为根目录下的所有文件

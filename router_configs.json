@@ -9,7 +9,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "livinet,zr-3020-ubootmod"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "netgear_wax220",
@@ -21,7 +22,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "netgear,wax220"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "mediatek_mt7981-rfb",
@@ -37,7 +39,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "mediatek,mt7981-rfb"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "mediatek_mt7986a-rfb-nand",
@@ -49,7 +52,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "mediatek,mt7986a-rfb-snand"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "mediatek_mt7986b-rfb",
@@ -61,7 +65,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "mediatek,mt7986b-rfb"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "mediatek_mt7988a-rfb",
@@ -72,7 +77,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "mediatek,mt7988a-rfb"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "mercusys_mr90x-v1",
@@ -84,7 +90,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "mercusys,mr90x-v1"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "qihoo_360t7",
@@ -96,7 +103,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "qihoo,360t7"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "qihoo_360t7-ubootmod",
@@ -109,7 +117,8 @@
         "supportedDevices": [
             "qihoo,360t7-ubootmod",
             "qihoo,360-t7-ubootmod"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "tplink_tl-xdr4288",
@@ -122,7 +131,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "tplink,tl-xdr4288"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "tplink_tl-xdr6086",
@@ -135,7 +145,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "tplink,tl-xdr6086"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "tplink_tl-xdr6088",
@@ -148,7 +159,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "tplink,tl-xdr6088"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "xiaomi_mi-router-wr30u-112m-nmbm",
@@ -160,7 +172,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "xiaomi,mi-router-wr30u-112m-nmbm"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "xiaomi_mi-router-wr30u-stock",
@@ -172,7 +185,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "xiaomi,mi-router-wr30u-stock"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "xiaomi_mi-router-wr30u-ubootmod",
@@ -184,7 +198,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "xiaomi,mi-router-wr30u-ubootmod"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "xiaomi_redmi-router-ax6000",
@@ -197,7 +212,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "xiaomi,redmi-router-ax6000"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "xiaomi_redmi-router-ax6000-stock",
@@ -210,7 +226,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "xiaomi,redmi-router-ax6000-stock"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "xiaomi_redmi-router-ax6000-ubootmod",
@@ -223,7 +240,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "xiaomi,redmi-router-ax6000-ubootmod"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "zyxel_ex5601-t0-stock",
@@ -235,7 +253,8 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "mediatek,mt7986a-rfb-snand"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     },
     {
         "name": "zyxel_nwa50ax-pro",
@@ -248,6 +267,7 @@
         "hasImageMetadata": 1,
         "supportedDevices": [
             "zyxel,nwa50ax-pro"
-        ]
+        ],
+        "targetPlatform": "mediatek/filogic"
     }
 ]
