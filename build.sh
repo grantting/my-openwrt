@@ -13,7 +13,7 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # 使用 $PROFILE 变量
-echo "Profile is set to: $PROFILE"
+PROFILE="$PROFILE"
 
 # 主配置名称
 # PROFILE="qihoo_360t7"
