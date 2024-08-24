@@ -22,4 +22,7 @@ sed -i "s/CONFIG_ISO_IMAGES=y/# CONFIG_ISO_IMAGES is not set/" .config
 sed -i "s/CONFIG_VHDX_IMAGES=y/# CONFIG_VHDX_IMAGES is not set/" .config
 
 # 将根文件系统分区大小增加到500MB
-# sed -i "s/CONFIG_TARGET_ROOTFS_PARTSIZE=300/CONFIG_TARGET_ROOTFS_PARTSIZE=500/" .config
+# sed -i "s/CONFIG_TARGET_ROOTFS_PARTSIZE=300/ CONFIG_TARGET_ROOTFS_PARTSIZE=500/" .config
+
+# 追加包地址到feeds
+sed -i '$a openwrt-packages https://github.com/kiddin9/openwrt-packages.git' .feeds
