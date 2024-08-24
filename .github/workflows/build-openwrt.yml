@@ -50,7 +50,7 @@ jobs:
           echo "MODEL=$model" >> $GITHUB_ENV
           echo "URL_PLATFORM=$platform" >> $GITHUB_ENV
           # 从环境变量中读取 platform 的值，并替换 / 为 -
-          echo "PLATFORM=$(echo $platform | tr '/' '-')  >> $GITHUB_ENV
+          echo "PLATFORM=$(echo "$platform" | tr '/' '-')  >> $GITHUB_ENV
           
       # 在 $GITHUB_WORKSPACE 下签出您的存储库，以便您的作业可以访问它
       - name: 查看
