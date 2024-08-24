@@ -16,9 +16,9 @@ on:
         required: false
         default: 'true'
       model:
-        description: '机型参数'
+        description: '机型,平台'
         required: false
-        default: '360t7'
+        default: 'qihoo_360t7,mediatek/filogic'
 
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
@@ -43,7 +43,14 @@ jobs:
         run: |
           echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
           echo "DATETIME=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-          echo "MODEL=${{ github.event.inputs.model }}" >> $GITHUB_ENV
+          # 使用逗号作为分隔符分割字符串
+          IFS=',' read -r model platform <<< "${{ github.event.inputs.model }}"
+
+          # 将分割得到的值赋给对应的环境变量
+          echo "MODEL=$model" >> $GITHUB_ENV
+          echo "URL_PLATFORM=$platform" >> $GITHUB_ENV
+          # 从环境变量中读取 platform 的值，并替换 / 为 -
+          echo "PLATFORM=$(echo $platform | tr '/' '-')  >> $GITHUB_ENV
           
       # 在 $GITHUB_WORKSPACE 下签出您的存储库，以便您的作业可以访问它
       - name: 查看
@@ -53,35 +60,35 @@ jobs:
 
       - name: 下载imagebuilder
         run: |
-          wget $DOWNLOAD_BASE/releases/$VERSION/targets/mediatek/filogic/$VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64.tar.xz
-          tar -xvf $VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64.tar.xz
-          rm -rf $VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64.tar.xz
-          cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64/
+          wget $DOWNLOAD_BASE/releases/$VERSION/targets/${{github.env.URL_PLATFORM}}/$VENDOR-imagebuilder-$VERSION-${{github.env.PLATFORM}}.Linux-x86_64.tar.xz
+          tar -xvf $VENDOR-imagebuilder-$VERSION-${{github.env.PLATFORM}}.Linux-x86_64.tar.xz
+          rm -rf $VENDOR-imagebuilder-$VERSION-${{github.env.PLATFORM}}.Linux-x86_64.tar.xz
+          cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-${{github.env.PLATFORM}}.Linux-x86_64/
            
       - name: 运行补丁和 DIY 脚本
-        working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64
+        working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{github.env.PLATFORM}}.Linux-x86_64
         run: |
           bash scripts/builder-patch.sh
           bash scripts/clash.sh
 
       - name: 生成固件
-        working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64
+        working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{github.env.PLATFORM}}.Linux-x86_64
         run: |
-          bash build.sh --profile "${{ env.MODEL }}"
+          bash build.sh --profile "${{ github.env.MODEL }}"
 
       - name: 上传 VDI 映像用于开发目的
         if: github.ref == 'refs/heads/dev'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-vdi-image-${{ env.DATETIME }}
-          path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64/bin/targets/mediatek/filogic/*.vdi
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-vdi-image-${{ github.env.DATETIME }}
+          path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{github.env.PLATFORM}}.Linux-x86_64/bin/targets/${{github.env.URL_PLATFORM}}/*.vdi
 
       - name: 将所有固件上传到 Artifacts
         if: github.event.inputs.upload-all == 'true'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ env.DATETIME }}
-          path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64/bin/targets/mediatek/filogic/*
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ github.env.DATETIME }}
+          path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{github.env.PLATFORM}}.Linux-x86_64/bin/targets/${{github.env.URL_PLATFORM}}/*
 
       - name: 上传固件发布
         if: github.event.inputs.release == 'true'
@@ -89,7 +96,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
-          file: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-mediatek-filogic.Linux-x86_64/bin/targets/mediatek/filogic/*
+          file: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{github.env.PLATFORM}}.Linux-x86_64/bin/targets/${{github.env.URL_PLATFORM}}/*
           asset_name: ${{ github.event.repository.name }}-${{ github.sha }}
-          tag: release-${{ env.DATE }}
+          tag: release-${{ github.env.DATE }}
           overwrite: true
