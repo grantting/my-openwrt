@@ -18,12 +18,17 @@ on:
       model:
         description: '机型,平台'
         required: false
-        default: 'qihoo_360t7,mediatek/filogic'
+        default: 'qihoo_360t7-ubootmod,mediatek/filogic'
 
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
   VENDOR: immortalwrt
   VERSION: 23.05.1
+  DATETIME: ''
+  PLATFORM: ''
+  URL_PLATFORM: ''
+  MODEL: ''
+  DATE: ''
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -92,7 +97,7 @@ jobs:
         if: github.event.inputs.upload-all == 'true'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ env.DATETIME }}
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL }}-images-${{ env.DATETIME }}
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM }}.Linux-x86_64/bin/targets/${{env.URL_PLATFORM}}/*
 
       - name: 上传固件发布

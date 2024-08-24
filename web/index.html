@@ -2,7 +2,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.global.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tdesign-vue-next/dist/tdesign.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tdesign-vue-next/dist/tdesign.min.css">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/tdesign-icons-vue-next@0.2.4/dist/index.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/tdesign-icons-vue-next@0.2.4/dist/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
     <link rel="stylesheet" href="./style.css" />
     <script src="./routerList.js"></script>
@@ -10,79 +10,76 @@
 
 <div id="app">
     <div class="verticalCenter">
-        <t-card :bordered="false" class="multiline responsive-width" class="multiline">
+        <t-card :bordered="false" class="multiline responsive-width">
             <template #title>
                 路由器选择
             </template>
-            <t-space direction="vertical">
-                <t-auto-complete v-model="value" :options="options" highlight-keyword filterable placeholder="输入型号"
-                    clearable="true" :select="parameterListGeneration(value)"></t-auto-complete>
+            <t-space direction="vertical" style="width: 100%;">
+                <t-auto-complete v-model="value" :options="options" :highlight-keyword="true" filterable
+                    placeholder="输入型号" clearable @select="parameterListGeneration">
+                </t-auto-complete>
 
-                <t-descriptions layout="vertical" tableLayout="auto">
+                <t-descriptions layout="vertical" table-layout="auto">
                     <t-descriptions-item label="机器型号">{{parameterList.name}}</t-descriptions-item>
                     <t-descriptions-item label="目标平台">{{parameterList.targetPlatform}}</t-descriptions-item>
                 </t-descriptions>
-            </t-space>
 
+                <div style="text-align: right;">
+                    <t-button shape="circle" variant="outline" @click="copyParameter">
+                        <template #icon>
+                            <t-icon name="copy"></t-icon>
+                        </template>
+                    </t-button>
+                </div>
+
+            </t-space>
         </t-card>
     </div>
-
 </div>
 
 <script type="module">
-    const { createApp, ref, onBeforeMount, onMounted, } = Vue;
+    const { createApp, ref, onMounted } = Vue;
 
     const app = createApp({
         setup() {
-            const value = ref('')
+            const value = ref('');
+            const parameterList = ref({ name: '', targetPlatform: '' });
 
             // 生成 options 数组
-            const generateOptions = (list) => {
-                return list.map(item => item.name);
-            };
+            const generateOptions = (list) => list.map(item => item.name);
 
-            const getTargetPlatformByName = (deviceName) => {
-                return deviceList.find(device => device.name === deviceName)?.targetPlatform;
-            }
+            // 获取目标平台
+            const getTargetPlatformByName = (deviceName) =>
+                deviceList.find(device => device.name === deviceName)?.targetPlatform;
 
-            const parameterList = ref([])
-
-            const parameterListGeneration = async (value) => {
-                // 更新 parameterList 的属性
-                parameterList.value.name = value;
-                parameterList.value.targetPlatform = getTargetPlatformByName(value);
-
-                // 准备要复制的文本
+            // 复制参数
+            const copyParameter = async () => {
                 const textToCopy = `${parameterList.value.name},${parameterList.value.targetPlatform}`;
-
                 try {
-                    // 复制到剪切板
-
                     await navigator.clipboard.writeText(textToCopy);
-
-                    if (textToCopy != ',undefined') {
-
-                        setTimeout(() => {
-                            alert('已成功复制到剪贴板');
-                        }, 200);
-                    }
-
+                    alert('已成功复制到剪贴板');
                 } catch (err) {
                     console.error('Failed to copy text: ', err);
                 }
+            };
+
+            // 更新 parameterList 的属性
+            const parameterListGeneration = (selectedOption) => {
+                parameterList.value.name = selectedOption;
+                parameterList.value.targetPlatform = getTargetPlatformByName(selectedOption);
             };
 
             // 使用函数生成 options
             const options = generateOptions(deviceList);
 
             onMounted(() => {
-
-            })
+                // 初始化时可以在这里做些事情，比如加载数据等
+            });
 
             return {
-                options, value, getTargetPlatformByName, parameterList,
-                parameterListGeneration,
-            }
+                options, value, parameterList,
+                parameterListGeneration, copyParameter
+            };
         }
     });
 
