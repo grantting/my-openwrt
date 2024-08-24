@@ -84,7 +84,7 @@ jobs:
       - name: 生成固件
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM }}.Linux-x86_64
         run: |
-          bash build.sh --profile "${{ env.MODEL }}"
+          bash build.sh
 
       - name: 上传 VDI 映像用于开发目的
         if: github.ref == 'refs/heads/dev'

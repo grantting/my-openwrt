@@ -9,7 +9,8 @@ echo "Current Path: $PWD"
 cd $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-$PLATFORM.Linux-x86_64 || exit
 
 # 移除不需要的默认软件包
-sed -i "/luci-app-cpufreq/d" include/target.mk
+# sed -i "/luci-app-cpufreq/d" include/target.mk
+# 使用 sed 命令删除 include/target.mk 文件中包含 luci-app-cpufreq 的行。这通常是为了移除不需要的默认软件包配置。
 
 # 强制 opkg 在安装时覆盖已存在的文件
 sed -i "s/install \$(BUILD_PACKAGES)/install \$(BUILD_PACKAGES) --force-overwrite/" Makefile
@@ -21,4 +22,4 @@ sed -i "s/CONFIG_ISO_IMAGES=y/# CONFIG_ISO_IMAGES is not set/" .config
 sed -i "s/CONFIG_VHDX_IMAGES=y/# CONFIG_VHDX_IMAGES is not set/" .config
 
 # 将根文件系统分区大小增加到500MB
-# sed -i "s/CONFIG_TARGET_ROOTFS_PARTSIZE=300/CONFIG_TARGET_ROOTFS_PARTSIZE=800/" .config
+# sed -i "s/CONFIG_TARGET_ROOTFS_PARTSIZE=300/CONFIG_TARGET_ROOTFS_PARTSIZE=500/" .config

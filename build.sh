@@ -4,24 +4,7 @@
 make info
 
 # 初始化 PROFILE 变量
-PROFILE=""
-
-# 解析命令行参数
-while [[ $# -gt 0 ]]; do
-    key="$1"
-    case $key in
-        --profile)
-        # 将下一个参数值赋给 PROFILE
-        PROFILE="$2"
-        shift # 过掉 --profile 本身
-        ;;
-        *)    # 不认识的参数
-        echo "Unknown option: $1"
-        exit 1
-        ;;
-    esac
-    shift # 过掉已经处理过的选项或者位置参数
-done
+PROFILE="$MODEL"
 
 # 主配置名称
 # PROFILE="qihoo_360t7"
