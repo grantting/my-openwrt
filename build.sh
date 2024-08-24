@@ -3,20 +3,25 @@
 # 打印 info
 make info
 
-# 检查是否至少有一个参数传递进来
-if [ "$#" -lt 1 ]; then
-    echo "Usage: $0 --profile <profile_name>"
-    exit 1
-fi
+# 初始化 PROFILE 变量
+PROFILE=""
 
-# 获取 --profile 参数之后的值
-profile=$1
-
-# 如果 --profile 后面跟着正确的参数，则将其赋值给 PROFILE 变量
-if [[ $profile == "--profile"* ]]; then
-    PROFILE=${profile#*=}
-fi
-
+# 解析命令行参数
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        --profile)
+        # 将下一个参数值赋给 PROFILE
+        PROFILE="$2"
+        shift # 过掉 --profile 本身
+        ;;
+        *)    # 不认识的参数
+        echo "Unknown option: $1"
+        exit 1
+        ;;
+    esac
+    shift # 过掉已经处理过的选项或者位置参数
+done
 
 # 主配置名称
 # PROFILE="qihoo_360t7"
