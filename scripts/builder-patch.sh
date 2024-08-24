@@ -6,7 +6,7 @@ echo "Start Builder Patch !"
 echo "Current Path: $PWD"
 
 # 切换到指定的工作目录，如果目录不存在则退出脚本
-cd $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-mediatek-filogic.Linux-x86_64 || exit
+cd $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-$PLATFORM.Linux-x86_64 || exit
 
 # 移除不需要的默认软件包
 sed -i "/luci-app-cpufreq/d" include/target.mk
