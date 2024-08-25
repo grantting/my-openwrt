@@ -125,9 +125,3 @@ jobs:
           asset_name: ${{ github.event.repository.name }}-${{ github.sha }}
           tag: release-${{ env.DATE }}
           overwrite: true
-
-      - name: 运行清理脚本
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          node scripts/delete-old-runs.js
