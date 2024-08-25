@@ -26,3 +26,6 @@ sed -i "s/CONFIG_VHDX_IMAGES=y/# CONFIG_VHDX_IMAGES is not set/" .config
 
 # 使用sed命令来修改feeds.conf.default文件中的immortalwrt_packages行
 sed -i 's#src/gz immortalwrt_packages https://downloads\.immortalwrt\.org/releases/23.05.3/packages#aarch64_cortex-a53#; s#https://downloads\.immortalwrt\.org/releases/23.05.3/packages#https://op.dllkids.xyz/packages#g; s#/#$#' repositories.conf
+
+# 查看修改后的内容
+cat repositories.conf
