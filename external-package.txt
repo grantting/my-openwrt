@@ -10,3 +10,5 @@ luci-i18n-base-zh-cn
 luci-i18n-firewall-zh-cn
 quickstart
 luci-lib-taskd
+taskd
+luci-lib-xterm
