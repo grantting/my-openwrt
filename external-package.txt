@@ -1,6 +1,5 @@
 luci-theme-argon
 luci-i18n-argon-config-zh-cn
-luci-theme-design
 luci-app-openclash
 luci-app-turboacc
 luci-app-vlmcsd
