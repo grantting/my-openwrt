@@ -9,12 +9,16 @@ TARGET_DIR="packages"
 mkdir -p "$TARGET_DIR"
 
 # 软件包前缀
-PACKAGE_PREFIX="luci-app-openclash"
-PACKAGE_EXTENSION=".ipk"
+package_name="luci-app-openclash"
 
-# 尝试下载最新的luci-app-openclash ipk包
-PACKAGE_NAME="${PACKAGE_PREFIX}*.${PACKAGE_EXTENSION}"
-wget --output-document="$TARGET_DIR/${PACKAGE_NAME//\*/_}" "$BASE_URL$PACKAGE_NAME"
+# 获取完整的软件包 URL
+full_url=$(wget -qO- "$BASE_URL" | grep -oP "${package_name}.*?\.ipk" | head -n 1)
+
+# 生成完整的下载 URL
+download_url="$BASE_URL/$full_url"
+
+# 下载软件包
+wget -q "$download_url" -O "${package_name}.ipk"
 
 # 检查下载是否成功
 if [ $? -eq 0 ]; then
