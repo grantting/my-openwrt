@@ -4,7 +4,6 @@ luci-theme-design
 luci-app-openclash
 luci-app-turboacc
 luci-app-vlmcsd
-luci-app-my-dnshelper
 luci-app-store
 luci-app-quickstart
 luci-i18n-opkg-zh-cn

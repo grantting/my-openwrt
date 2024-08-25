@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # 定义基础URL
-BASE_URL="https://dl.openwrt.ai/packages-23.05/aarch64_cortex-a53/packages/"
+BASE_URL="https://op.dllkids.xyz/packages/aarch64_cortex-a53/"
 PACKAGES_FILE="Packages"
 EXTERNAL_PACKAGE_FILE="external-package.txt"
 TARGET_DIR="packages"
