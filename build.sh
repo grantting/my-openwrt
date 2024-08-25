@@ -11,31 +11,17 @@ PROFILE="$MODEL"
 
 PACKAGES=""
 
-# Argon 主题
-PACKAGES="$PACKAGES luci-theme-argon luci-i18n-argon-config-zh-cn"
+# 读取 external-package.txt 文件中的每一行
+while IFS= read -r PACKAGE_NAME; do
+    # 将当前条目添加到 PACKAGES 变量中，并用空格分隔
+    PACKAGES="$PACKAGES $PACKAGE_NAME"
+done < "external-package.txt"
 
-# 主题neobird改版
-PACKAGES="$PACKAGES luci-theme-design"
+# 删除第一个空格
+PACKAGES="${PACKAGES# }"
 
-# 常用软件服务
-
-# OpenClash 代理
-PACKAGES="$PACKAGES luci-app-openclash"
-
-# 网络加速
-PACKAGES="$PACKAGES luci-app-turboacc"
-
-# KMS服务器
-PACKAGES="$PACKAGES luci-app-vlmcsd"
-
-# DNS管理与去广告
-PACKAGES="$PACKAGES luci-app-my-dnshelper"
-
-# 假装iStoreOS
-PACKAGES="$PACKAGES luci-app-store luci-app-quickstart"
-
-# 界面翻译补全
-PACKAGES="$PACKAGES luci-i18n-opkg-zh-cn luci-i18n-base-zh-cn luci-i18n-firewall-zh-cn"
+# 输出最终的 PACKAGES 变量
+echo "PACKAGES=\"$PACKAGES\""
 
 # 一些自定义文件
 FILES="files"
