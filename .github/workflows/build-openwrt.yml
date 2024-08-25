@@ -83,7 +83,7 @@ jobs:
       - name: 下载包测试
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM }}.Linux-x86_64
         run: |
-            bash add-packages.sh
+            bash download-packages.sh
 
       - name: 运行补丁和 DIY 脚本
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM }}.Linux-x86_64
