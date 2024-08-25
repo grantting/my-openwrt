@@ -9,21 +9,23 @@ TARGET_DIR="packages"
 mkdir -p "$TARGET_DIR"
 
 # 软件包前缀
-package_name="luci-app-openclash"
+PACKAGE_PREFIX="luci-app-openclash_"
+PACKAGE_EXTENSION=".ipk"
 
-# 获取完整的软件包 URL
-full_url=$(wget -qO- "$BASE_URL" | grep -oP "${package_name}.*?\.ipk" | head -n 1)
+# 获取网页内容并提取出符合模式的文件名
+PACKAGE_NAME=$(wget -qO- "$BASE_URL" | grep -oP "${PACKAGE_PREFIX}.*?${PACKAGE_EXTENSION}")
 
-# 生成完整的下载 URL
-download_url="$BASE_URL/$full_url"
-
-# 下载软件包
-wget -q "$download_url" -O "${package_name}.ipk"
-
-# 检查下载是否成功
-if [ $? -eq 0 ]; then
-    echo "下载成功，列出目录内容:"
-    ls -1 "$TARGET_DIR"
+# 如果找到了合适的文件名，则下载
+if [ -n "$PACKAGE_NAME" ]; then
+    wget --output-document="$TARGET_DIR/$PACKAGE_NAME" "$BASE_URL$PACKAGE_NAME"
+    
+    # 检查下载是否成功
+    if [ $? -eq 0 ]; then
+        echo "下载成功，列出目录内容:"
+        ls -1 "$TARGET_DIR"
+    else
+        echo "下载失败，请检查网络连接或URL是否正确。"
+    fi
 else
-    echo "下载失败，请检查网络连接或URL是否正确。"
+    echo "未找到符合模式的文件名，请检查基础URL或模式是否正确。"
 fi
