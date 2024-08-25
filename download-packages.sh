@@ -13,13 +13,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# 查找包含 luci-app-alist 的行，并提取 Filename 字段
-PACKAGE_NAME="luci-app-alist"
-FILENAME=$(grep -A1 "Package: $PACKAGE_NAME" "$PACKAGES_FILE" | grep -i "Filename:" | cut -d':' -f2 | xargs)
+# 查找 Filename 字段中包含 luci-app-alist 的行，并提取出文件名
+FILENAME=$(grep -i "Filename:" "$PACKAGES_FILE" | grep -i "luci-app-alist" | head -n 1 | cut -d':' -f2 | xargs)
 
 # 检查是否找到了对应的文件名
 if [ -n "$FILENAME" ]; then
     echo "找到的文件名为: $FILENAME"
 else
-    echo "未找到对应的文件名。"
+    echo "未找到包含 luci-app-alist 的文件名。"
 fi
