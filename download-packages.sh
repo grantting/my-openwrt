@@ -15,7 +15,7 @@ download_package() {
   local package_name=$1
   local file_name=$(wget -qO- "$BASE_URL" | grep -oP "${package_name}.*?\.ipk")
   if [ -n "$file_name" ]; then
-    wget "${BASE_URL}${file_name}" -P "${TARGET_DIR}"
+    xargs wget "${BASE_URL}${file_name}" -P "./${TARGET_DIR}"
     echo "Downloaded ${file_name}"
   else
     echo "File not found for ${package_name}"
