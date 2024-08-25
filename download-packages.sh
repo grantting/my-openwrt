@@ -1,20 +1,20 @@
 #!/bin/sh
 
-# 读取 .config 文件中的每一行
-while IFS= read -r line; do
-  # 检查是否是 CONFIG_TARGET_ARCH_PACKAGES 行
-  if [[ $line =~ ^CONFIG_TARGET_ARCH_PACKAGES="([^"]+)"$ ]]; then
-    # 提取 CONFIG_TARGET_ARCH_PACKAGES 的值
-    ARCH_VALUE="${BASH_REMATCH[1]}"
-    # 构建 BASE_URL
-    BASE_URL="https://op.dllkids.xyz/packages/$ARCH_VALUE/"
-    # 输出 BASE_URL
-    echo "BASE_URL=\"$BASE_URL\""
-    # 退出循环
-    break
-  fi
-done < ".config"
 
+BASE_URL=""
+
+# 从 .config 文件中提取 CONFIG_TARGET_ARCH_PACKAGES 的值
+ARCH_VALUE=$(grep '^CONFIG_TARGET_ARCH_PACKAGES=' .config | sed -e 's/^CONFIG_TARGET_ARCH_PACKAGES="//' -e 's/"$//')
+
+# 如果找到了架构值
+if [ -n "$ARCH_VALUE" ]; then
+  # 构建 BASE_URL
+  BASE_URL="https://op.dllkids.xyz/packages/$ARCH_VALUE/"
+  # 输出 BASE_URL
+  echo "BASE_URL=\"$BASE_URL\""
+else
+  echo "未找到 CONFIG_TARGET_ARCH_PACKAGES 或者其值不符合预期格式。"
+fi
 
 # 定义基础URL
 # BASE_URL="https://op.dllkids.xyz/packages/aarch64_cortex-a53/"
