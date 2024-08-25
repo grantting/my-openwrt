@@ -85,21 +85,20 @@ jobs:
       #   run: |
       #     cat external-package-urls.txt | xargs wget -P packages  
 
-      - name: 下载包测试
+      - name: 批量下载包
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM }}.Linux-x86_64
         run: |
-            bash download-packages.sh
+          bash scripts/download-packages.sh
 
       - name: 运行补丁和 DIY 脚本
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM }}.Linux-x86_64
         run: |
           bash scripts/builder-patch.sh
-          bash scripts/clash.sh
 
       - name: 生成固件
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM }}.Linux-x86_64
         run: |
-          bash build.sh
+          bash scripts/build.sh
 
       - name: 上传 VDI 映像用于开发目的
         if: github.ref == 'refs/heads/dev'

@@ -3,12 +3,13 @@
 # 打印 info
 make info
 
-# 初始化 PROFILE 变量
-PROFILE="$MODEL"
-
 # 主配置名称
 # PROFILE="qihoo_360t7"
 
+# 初始化 PROFILE 变量
+PROFILE="$MODEL"
+
+# 初始化PACKAGES
 PACKAGES=""
 
 # 读取 external-package.txt 文件中的每一行
