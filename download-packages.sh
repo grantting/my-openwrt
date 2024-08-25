@@ -1,7 +1,24 @@
 #!/bin/sh
 
+# 读取 .config 文件中的每一行
+while IFS= read -r line; do
+  # 检查是否是 CONFIG_TARGET_ARCH_PACKAGES 行
+  if [[ $line =~ ^CONFIG_TARGET_ARCH_PACKAGES="([^"]+)"$ ]]; then
+    # 提取 CONFIG_TARGET_ARCH_PACKAGES 的值
+    ARCH_VALUE="${BASH_REMATCH[1]}"
+    # 构建 BASE_URL
+    BASE_URL="https://op.dllkids.xyz/packages/$ARCH_VALUE/"
+    # 输出 BASE_URL
+    echo "BASE_URL=\"$BASE_URL\""
+    # 退出循环
+    break
+  fi
+done < ".config"
+
+
 # 定义基础URL
-BASE_URL="https://op.dllkids.xyz/packages/aarch64_cortex-a53/"
+# BASE_URL="https://op.dllkids.xyz/packages/aarch64_cortex-a53/"
+
 PACKAGES_FILE="Packages"
 EXTERNAL_PACKAGE_FILE="external-package.txt"
 TARGET_DIR="packages"
