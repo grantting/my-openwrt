@@ -129,4 +129,5 @@ jobs:
       - name: 运行清理脚本
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node delete-old-runs.js
+        run: |
+          node scripts/delete-old-runs.js
