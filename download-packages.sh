@@ -13,11 +13,13 @@ PACKAGE_PREFIX="luci-app-openclash_"
 PACKAGE_EXTENSION=".ipk"
 
 # 获取网页内容并提取出符合模式的文件名
-PACKAGE_NAME=$(wget -qO- "$BASE_URL" | grep -oP "${PACKAGE_PREFIX}.*?${PACKAGE_EXTENSION}")
+FILES_LIST=$(wget -qO- "$BASE_URL")
+PACKAGE_NAME=$(echo "$FILES_LIST" | grep -Eo "${PACKAGE_PREFIX}[0-9.-]*${PACKAGE_EXTENSION}")
 
 # 如果找到了合适的文件名，则下载
 if [ -n "$PACKAGE_NAME" ]; then
-    wget --output-document="$TARGET_DIR/$PACKAGE_NAME" "$BASE_URL$PACKAGE_NAME"
+    FULL_URL="$BASE_URL$PACKAGE_NAME"
+    wget --output-document="$TARGET_DIR/$PACKAGE_NAME" "$FULL_URL"
     
     # 检查下载是否成功
     if [ $? -eq 0 ]; then
