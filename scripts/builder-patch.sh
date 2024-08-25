@@ -23,9 +23,3 @@ sed -i "s/CONFIG_VHDX_IMAGES=y/# CONFIG_VHDX_IMAGES is not set/" .config
 
 # 将根文件系统分区大小增加到500MB
 # sed -i "s/CONFIG_TARGET_ROOTFS_PARTSIZE=300/ CONFIG_TARGET_ROOTFS_PARTSIZE=500/" .config
-
-# 使用sed命令来修改feeds.conf.default文件中的immortalwrt_packages行
-sudo sed -i 's|src/gz immortalwrt_packages https://downloads\.immortalwrt\.org/releases/23.05.3/packages/aarch64_cortex-a53|src/gz immortalwrt_packages https://op.dllkids.xyz/packages|g' repositories.conf
-
-# 查看修改后的内容
-cat repositories.conf
