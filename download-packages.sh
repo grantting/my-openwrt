@@ -20,11 +20,8 @@ fi
 
 # 读取外部文件列表
 while IFS= read -r PACKAGE_NAME; do
-    # 查找 Filename 字段中包含 PACKAGE_NAME 的行，并提取出文件名
-    FILENAME=$(grep -i "Filename:" "$PACKAGES_FILE" | grep -i "$PACKAGE_NAME" | head -n 1 | cut -d':' -f2 | xargs)
-    
-    # 检查是否找到了对应的文件名
-    if [ -n "$FILENAME" ]; then
+    # 查找 Filename 字段中包含 PACKAGE_NAME 的所有行，并提取出文件名
+    while IFS=: read -r _ FILENAME; do
         # 拼接完整的URL
         FULL_URL="$BASE_URL$FILENAME"
         
@@ -37,7 +34,5 @@ while IFS= read -r PACKAGE_NAME; do
         else
             echo "下载失败，请检查网络连接或URL是否正确。"
         fi
-    else
-        echo "未找到包含 $PACKAGE_NAME 的文件名。"
-    fi
+    done < <(grep -i "Filename:" "$PACKAGES_FILE" | grep -i "$PACKAGE_NAME")
 done < "$EXTERNAL_PACKAGE_FILE"
