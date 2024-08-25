@@ -8,9 +8,13 @@ TARGET_DIR="packages"
 # 确保目标目录存在
 mkdir -p "$TARGET_DIR"
 
-# 下载文件
-PACKAGE_NAME="luci-app-openclash_0.46.014-72_all.ipk"
-wget --output-document="$TARGET_DIR/$PACKAGE_NAME" "$BASE_URL$PACKAGE_NAME"
+# 软件包前缀
+PACKAGE_PREFIX="luci-app-openclash"
+PACKAGE_EXTENSION=".ipk"
+
+# 尝试下载最新的luci-app-openclash ipk包
+PACKAGE_NAME="${PACKAGE_PREFIX}*.${PACKAGE_EXTENSION}"
+wget --output-document="$TARGET_DIR/${PACKAGE_NAME//\*/_}" "$BASE_URL$PACKAGE_NAME"
 
 # 检查下载是否成功
 if [ $? -eq 0 ]; then
