@@ -28,8 +28,17 @@ download_package() {
   fi
 }
 
-# Read the package list file and download each package
+# 读取包列表文件并下载各个包
 while IFS= read -r package; do
   [ -z "$package" ] && continue  # Skip empty lines
   download_package "$package"
 done < "$PACKAGE_LIST"
+
+# 列出目标目录中的包的函数
+list_packages() {
+  echo "Packages in $TARGET_DIR:"
+  ls -1 "$TARGET_DIR"
+}
+
+# 最后列出下载的包
+list_packages
