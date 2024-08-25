@@ -22,6 +22,9 @@ fi
 while IFS= read -r PACKAGE_NAME; do
     # 查找 Filename 字段中包含 PACKAGE_NAME 的所有行，并提取出文件名
     while IFS=: read -r _ FILENAME; do
+        # 清除 FILENAME 中的空格
+        FILENAME=$(echo "$FILENAME" | xargs)
+        
         # 拼接完整的URL
         FULL_URL="$BASE_URL$FILENAME"
         
