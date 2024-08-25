@@ -8,15 +8,14 @@ PACKAGES_FILE="Packages"
 wget --output-document="$PACKAGES_FILE" "$BASE_URL$PACKAGES_FILE"
 
 # 检查下载是否成功
-if [ $? -eq 0 ]; then
-    echo "下载成功，开始解析 Packages 文件..."
-else
+if [ $? -ne 0 ]; then
     echo "下载失败，请检查网络连接或URL是否正确。"
     exit 1
 fi
 
 # 查找包含 luci-app-alist 的行，并提取 Filename 字段
-FILENAME=$(grep -i "Package: luci-app-alist" "$PACKAGES_FILE" | awk 'NR==1{getline; print $2}')
+PACKAGE_NAME="luci-app-alist"
+FILENAME=$(grep -A1 "Package: $PACKAGE_NAME" "$PACKAGES_FILE" | grep -i "Filename:" | cut -d':' -f2 | xargs)
 
 # 检查是否找到了对应的文件名
 if [ -n "$FILENAME" ]; then
