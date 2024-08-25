@@ -1,44 +1,21 @@
 #!/bin/sh
 
-# Base URL
+# 定义基础URL
 BASE_URL="https://op.dllkids.xyz/packages/aarch64_cortex-a53/"
-# Target directory
+# 目标目录
 TARGET_DIR="packages"
-# Package list file
-PACKAGE_LIST="external-package.txt"
 
-# Ensure the target directory exists
+# 确保目标目录存在
 mkdir -p "$TARGET_DIR"
 
-# Function to download a package
-download_package() {
-  local package_name=$1
-  local full_url="$BASE_URL$(wget -qO- "$BASE_URL" | grep -oP "${package_name}.*?\.ipk")"
-  
-  if [ -n "$full_url" ]; then
-    local file_name=$(basename "$full_url")
-    if [ ! -f "$TARGET_DIR/$file_name" ]; then
-      wget -q --show-progress "$full_url" -P "$TARGET_DIR"
-      echo "Downloaded $full_url"
-    else
-      echo "$file_name already exists, skipping download."
-    fi
-  else
-    echo "File not found for $package_name"
-  fi
-}
+# 下载文件
+PACKAGE_NAME="luci-app-openclash_0.46.014-72_all.ipk"
+wget --output-document="$TARGET_DIR/$PACKAGE_NAME" "$BASE_URL$PACKAGE_NAME"
 
-# 读取包列表文件并下载各个包
-while IFS= read -r package; do
-  [ -z "$package" ] && continue  # Skip empty lines
-  download_package "$package"
-done < "$PACKAGE_LIST"
-
-# 列出目标目录中的包的函数
-list_packages() {
-  echo "Packages in $TARGET_DIR:"
-  ls -1 "$TARGET_DIR"
-}
-
-# 最后列出下载的包
-list_packages
+# 检查下载是否成功
+if [ $? -eq 0 ]; then
+    echo "下载成功，列出目录内容:"
+    ls -1 "$TARGET_DIR"
+else
+    echo "下载失败，请检查网络连接或URL是否正确。"
+fi
