@@ -269,5 +269,117 @@ const deviceList = [
             "zyxel,nwa50ax-pro"
         ],
         "targetPlatform": "mediatek/filogic"
+    },
+    {
+        "name": "buffalo_wxr-5950ax12",
+        "description": "Buffalo WXR-5950AX12",
+        "packages": ["ipq-wifi-buffalo_wxr-5950ax12"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["buffalo,wxr-5950ax12"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "dynalink_dl-wrx36",
+        "description": "Dynalink DL-WRX36",
+        "packages": ["ipq-wifi-dynalink_dl-wrx36"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["dynalink,dl-wrx36"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "edgecore_eap102",
+        "description": "Edgecore EAP102",
+        "packages": ["ipq-wifi-edgecore_eap102"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["edgecore,eap102"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "edimax_cax1800",
+        "description": "Edimax CAX1800",
+        "packages": ["ipq-wifi-edimax_cax1800"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["edimax,cax1800"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "netgear_wax218",
+        "description": "Netgear WAX218",
+        "packages": ["kmod-spi-gpio", "kmod-spi-bitbang", "kmod-gpio-nxp-74hc164", "ipq-wifi-netgear_wax218"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["netgear,wax218"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "prpl_haze",
+        "description": "prpl Foundation Haze",
+        "packages": ["ath11k-firmware-qcn9074", "ipq-wifi-prpl_haze", "kmod-ath11k-pci"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["prpl,haze"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "qnap_301w",
+        "description": "QNAP 301w",
+        "packages": ["ipq-wifi-qnap_301w"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["qnap,301w"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "redmi_ax6",
+        "description": "Redmi AX6",
+        "packages": ["ipq-wifi-redmi_ax6", "kmod-usb3", "kmod-usb-dwc3", "kmod-usb-dwc3-qcom", "automount"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["redmi,ax6"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "redmi_ax6-stock",
+        "description": "Redmi AX6 (stock layout)",
+        "packages": ["ipq-wifi-redmi_ax6", "kmod-usb3", "kmod-usb-dwc3", "kmod-usb-dwc3-qcom", "automount"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["redmi,ax6-stock"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "xiaomi_ax3600",
+        "description": "Xiaomi AX3600",
+        "packages": ["ipq-wifi-xiaomi_ax3600", "kmod-ath10k-ct-smallbuffers", "ath10k-firmware-qca9887-ct", "kmod-usb3", "kmod-usb-dwc3", "kmod-usb-dwc3-qcom", "automount"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["xiaomi,ax3600"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "xiaomi_ax3600-stock",
+        "description": "Xiaomi AX3600 (stock layout)",
+        "packages": ["ipq-wifi-xiaomi_ax3600", "kmod-ath10k-ct-smallbuffers", "ath10k-firmware-qca9887-ct", "kmod-usb3", "kmod-usb-dwc3", "kmod-usb-dwc3-qcom", "automount"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["xiaomi,ax3600-stock"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "xiaomi_ax9000",
+        "description": "Xiaomi AX9000",
+        "packages": ["ipq-wifi-xiaomi_ax9000", "kmod-ath11k-pci", "ath11k-firmware-qcn9074", "kmod-ath10k-ct", "ath10k-firmware-qca9887-ct"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["xiaomi,ax9000"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "zte_mf269",
+        "description": "ZTE MF269",
+        "packages": ["ipq-wifi-zte_mf269"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["zte,mf269"],
+        "targetPlatform": "ipq807x/generic"
+    },
+    {
+        "name": "zyxel_nbg7815",
+        "description": "ZYXEL NBG7815",
+        "packages": ["ipq-wifi-zyxel_nbg7815", "kmod-ath11k-pci", "kmod-hwmon-tmp103", "kmod-bluetooth"],
+        "hasImageMetadata": 1,
+        "supportedDevices": ["zyxel,nbg7815"],
+        "targetPlatform": "ipq807x/generic"
     }
 ]
