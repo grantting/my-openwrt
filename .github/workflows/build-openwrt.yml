@@ -111,7 +111,7 @@ jobs:
 
       - name: 上传固件发布
         if: github.event.inputs.release == 'true'
-        uses: svenstaro/upload-release-action@v3
+        uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
