@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: 生成 OpenWrt 固件
+name: DIY ImmortalWrt
 
 # Controls when the workflow will run
 
@@ -23,7 +23,7 @@ on:
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
   VENDOR: immortalwrt
-  VERSION: 23.05.1
+  VERSION: 23.05.3
   DATETIME: ''
   PLATFORM: ''
   URL_PLATFORM: ''
@@ -33,7 +33,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 # 该工作流程包含一个名为“build”的作业 
- Generate:
+ build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -44,11 +44,6 @@ jobs:
           sudo apt-get -qq update
           sudo apt-get -qq install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip qemu-utils mkisofs jq
       
-      - name: 设置 Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
       - name: 设置环境变量
         run: |
           echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
@@ -102,14 +97,14 @@ jobs:
 
       - name: 上传 VDI 映像用于开发目的
         if: github.ref == 'refs/heads/dev'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-vdi-image-${{ env.DATETIME }}
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM }}.Linux-x86_64/bin/targets/${{env.URL_PLATFORM}}/*.vdi
 
       - name: 将所有固件上传到 Artifacts
         if: github.event.inputs.upload-all == 'true'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL }}-images-${{ env.DATETIME }}
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM }}.Linux-x86_64/bin/targets/${{env.URL_PLATFORM}}/*

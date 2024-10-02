@@ -25,5 +25,9 @@ sed -i "s/CONFIG_VHDX_IMAGES=y/# CONFIG_VHDX_IMAGES is not set/" .config
 # sed -i "s/CONFIG_TARGET_ROOTFS_PARTSIZE=300/ CONFIG_TARGET_ROOTFS_PARTSIZE=500/" .config
 
 # 修改IP地址和广播地址
-sed -i 's/CONFIG_TARGET_PREINIT_IP="192.168.1.1"/CONFIG_TARGET_PREINIT_IP="192.168.10.1"/' .config
-sed -i 's/CONFIG_TARGET_PREINIT_BROADCAST="192.168.1.255"/CONFIG_TARGET_PREINIT_BROADCAST="192.168.10.255"/' .config
+sed -i 's/CONFIG_TARGET_PREINIT_IP="192.168.1.1"/ CONFIG_TARGET_PREINIT_IP="192.168.10.1"/' .config
+sed -i 's/CONFIG_TARGET_PREINIT_BROADCAST="192.168.1.255"/ CONFIG_TARGET_PREINIT_BROADCAST="192.168.10.255"/' .config
+
+# 修改主题
+sed -i "s/CONFIG_PACKAGE_luci-theme-bootstrap=y/# CONFIG_PACKAGE_luci-theme-bootstrap is not set/" .config
+sed -i "s/CONFIG_PACKAGE_luci-theme-argon is not set/# CONFIG_PACKAGE_luci-theme-argon=y/" .config
